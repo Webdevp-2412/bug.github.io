@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuggedOut404 - STEM Education</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /*---------------------------------------------------------------------
+            Custom CSS Styles
+        ---------------------------------------------------------------------*/
+        
+        /* Basic Theme Colors */
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #212529;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #212529;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+            color: #212529;
+            transform: translateY(-2px);
+        }
+
+        /* Loader Styles */
+        .loader_bg {
+            position: fixed;
+            z-index: 999999;
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 8px solid #ffc107;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #212529;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .logo a {
+            display: block;
+        }
+
+        header .logo img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        header nav ul li {
+            margin-left: 30px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        header nav ul li a:hover {
+            color: #ffc107;
+        }
+
+        header nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #ffc107;
+            transition: width 0.3s ease;
+        }
+
+        header nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .badge {
+            font-size: 10px;
+            padding: 3px 6px;
+        }
+
+        /* Banner Styles */
+        .fullwidth-banner {
+            position: relative;
+            height: 70vh;
+            min-height: 500px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(33, 37, 41, 0.8), rgba(255, 193, 7, 0.3)), url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/robin-glauser-zP7X_B86xOg-unsplash.jpg-P0mQD9L6sGlZTd1c4x2sx8TQ4p8Ca4.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .banner-content h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .banner-content p {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            color: #f8f9fa;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .banner-cta {
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Content Styles */
+        main {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: #ffc107;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about-section, .featured-kits {
+            margin-bottom: 80px;
+        }
+
+        .about-section .row {
+            align-items: center;
+        }
+
+        .about-section img {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-text {
+            padding-left: 40px;
+        }
+
+        .about-text h2 {
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            color: #212529;
+        }
+
+        .about-text p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        /* Card Styles */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .card-title {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #212529;
+        }
+
+        .card-text {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1em;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, #212529, #495057);
+            color: white;
+            padding: 80px 0;
+            margin: 80px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ffc107;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: #f8f9fa;
+            padding: 80px 0;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: #ffc107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2em;
+            color: #212529;
+        }
+
+        .feature-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #212529;
+        }
+
+        .feature-text {
+            color: #666;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #212529;
+            color: #fff;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            color: #ffc107;
+            margin-bottom: 25px;
+            font-size: 1.3em;
+        }
+
+        .footer-section p, .footer-section li {
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ffc107;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: #495057;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: #ffc107;
+            transform: translateY(-3px);
+        }
+
+        .social-icons img {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        .social-icons a:hover img {
+            filter: brightness(0);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #495057;
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            color: #ccc;
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffc107;
+            color: #212529;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #back-to-top:hover {
+            background: #e0a800;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        #back-to-top.show {
+            display: block;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            header nav ul li {
+                margin: 0;
+            }
+
+            .banner-content h1 {
+                font-size: 2.5em;
+            }
+
+            .banner-content p {
+                font-size: 1.2em;
+            }
+
+            .about-text {
+                padding-left: 0;
+                margin-top: 40px;
+            }
+
+            .section-title h2 {
+                font-size: 2em;
+            }
+
+            .social-icons {
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+            .fullwidth-banner {
+                height: 60vh;
+                min-height: 400px;
+                background-attachment: scroll;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Logo placeholder */
+        .logo-text {
+            color: #ffc107;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo-text:hover {
+            color: #ffc107;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loader_bg">
+        <div class="loader"></div>
+    </div>
+
+    <div id="wrapper">
+        <header class="sticky-wrapper-header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-3 col-sm-3 logo">
+                        <a href="index.html" class="logo-text">BuggedOut404</a>
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <div class="main-menu">
+                            <nav>
+                                <ul>
+                                    <li><a href="#home">Home</a></li>
+                                    <li><a href="#about">About</a></li>
+                                    <li><a href="#kits">Kits</a></li>
+                                    <li><a href="#contact">Contact</a></li>
+                                    <li><a href="#kits">Coming Soon <span class="badge badge-primary">New</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="home" class="fullwidth-banner">
+            <div class="banner-content">
+                <h1>Igniting Curiosity in STEM</h1>
+                <p>Empowering the next generation of innovators through hands-on learning and cutting-edge technology.</p>
+                <div class="banner-cta">
+                    <a href="#kits" class="btn btn-primary btn-lg">Explore Our Kits</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <main>
+                <section id="about" class="about-section fade-in">
+                    <div class="section-title">
+                        <h2>About BuggedOut404</h2>
+                        <p>Leading the way in innovative STEM education</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="images/tech-components.jpg" alt="Technology Components" class="img-fluid">
+                        </div>
+                        <div class="col-md-6 about-text">
+                            <h2>Our Mission</h2>
+                            <p>BuggedOut404 is dedicated to providing accessible and engaging STEM education resources. We believe that learning should be an adventure, and our kits are designed to spark curiosity and foster a love for science, technology, engineering, and mathematics.</p>
+                            <p>Our mission is to make STEM education fun and accessible for everyone, regardless of their background or location. Through hands-on projects and innovative learning materials, we're building the next generation of problem solvers and innovators.</p>
+                            <a href="#kits" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="stats-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="stat-item">
+                                    <span class="stat-number">1000+</span>
+                                    <div class="stat-label">Students Reached</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="stat-item">
+                                    <span class="stat-number">50+</span>
+                                    <div class="stat-label">STEM Kits</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="stat-item">
+                                    <span class="stat-number">25+</span>
+                                    <div class="stat-label">Schools</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="stat-item">
+                                    <span class="stat-number">95%</span>
+                                    <div class="stat-label">Success Rate</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="kits" class="featured-kits fade-in">
+                    <div class="section-title">
+                        <h2>Featured STEM Kits</h2>
+                        <p>Explore our exciting range of educational kits designed to inspire creativity and problem-solving skills</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="images/arduino-kit.jpg" alt="Arduino Starter Kit" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Arduino Starter Kit</h5>
+                                    <p class="card-text">Get started with microcontrollers and learn the basics of electronics and programming. Perfect for beginners looking to dive into the world of embedded systems.</p>
+                                    <a href="#" class="btn btn-primary">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="images/robotics-kit.jpg" alt="Robotics Kit" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Robotics Explorer Kit</h5>
+                                    <p class="card-text">Build your own robots and explore the world of mechanical engineering and automation. Includes motors, sensors, and programmable controllers.</p>
+                                    <a href="#" class="btn btn-primary">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="images/electronics-kit.jpg" alt="Electronics Kit" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Advanced Electronics Kit</h5>
+                                    <p class="card-text">Dive deeper into electronics with advanced components and circuit design principles. Perfect for intermediate to advanced learners.</p>
+                                    <a href="#" class="btn btn-primary">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="features-section">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Why Choose BuggedOut404?</h2>
+                            <p>Discover what makes our STEM education approach unique</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fa fa-lightbulb-o"></i>
+                                    </div>
+                                    <h4 class="feature-title">Hands-On Learning</h4>
+                                    <p class="feature-text">Our kits provide practical, hands-on experience that makes learning engaging and memorable.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fa fa-users"></i>
+                                    </div>
+                                    <h4 class="feature-title">Expert Support</h4>
+                                    <p class="feature-text">Get guidance from our team of experienced educators and industry professionals.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fa fa-rocket"></i>
+                                    </div>
+                                    <h4 class="feature-title">Future-Ready Skills</h4>
+                                    <p class="feature-text">Develop skills that are essential for success in tomorrow's technology-driven world.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <footer id="contact">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="footer-section">
+                                <h4>BuggedOut404</h4>
+                                <p>Empowering the next generation through innovative STEM education. Join us in building a brighter future through hands-on learning and discovery.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="footer-section">
+                                <h4>Quick Links</h4>
+                                <ul>
+                                    <li><a href="#home">Home</a></li>
+                                    <li><a href="#about">About Us</a></li>
+                                    <li><a href="#kits">STEM Kits</a></li>
+                                    <li><a href="#contact">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="footer-section">
+                                <h4>Contact Info</h4>
+                                <p><i class="fa fa-envelope"></i> info@buggedout404.com</p>
+                                <p><i class="fa fa-phone"></i> +1 (555) 123-4567</p>
+                                <p><i class="fa fa-map-marker"></i> 123 Innovation Drive, Tech City, TC 12345</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <p>&copy; 2023 BuggedOut404. All rights reserved.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="social-icons">
+                                <a href="#" data-toggle="tooltip" title="Facebook">
+                                    <img src="images/facebook-icon.png" alt="Facebook">
+                                </a>
+                                <a href="#" data-toggle="tooltip" title="Twitter">
+                                    <img src="images/twitter-icon.png" alt="Twitter">
+                                </a>
+                                <a href="#" data-toggle="tooltip" title="LinkedIn">
+                                    <img src="images/linkedin-icon.png" alt="LinkedIn">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <a href="#" id="back-to-top" title="Back to top">
+        <i class="fa fa-arrow-up"></i>
+    </a>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
